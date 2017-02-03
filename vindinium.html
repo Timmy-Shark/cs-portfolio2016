@@ -12,7 +12,7 @@
     
     <h1> My Code</h1>
     <code><pre>
-        var Bot = require('bot');
+var Bot = require('bot');
 var PF = require('pathfinding');
 var bot = new Bot('j1t08mki', 'arena', 'http://52.39.33.197:9000'); //Put your bot's code here and change training to Arena when you want to fight others.
 // var bot = new Bot('YOUR_KEY_HERE', 'arena', 'PRIVATE_SERVER_HERE'); //Put your bot's code here and change training to Arena when you want to fight others.
@@ -130,8 +130,68 @@ bot.runGame();
 
 <h1> Explaining My Bot</h1>
 <p> My Bot works by codes on my computer.</p>
-<p> I wanted my bot to attack and collect mines</p>
-<p> I made my bot do loops and collect mines</p>
+
+var task;
+        
+        if(bot.yourBot.life < 10){
+            task = "tavern";
+        }
+        
+        else if(bot.findDistance(myPos, closestbot.posArray) < 4 ){
+            task = "attack;"
+            
+        }
+        
+        else {
+            task = "freemines";
+        }
+
+
+<p> The above code makes a decision by making my bot go to tavers to get health. It also shows to claim the closest freemines. Then finally it also shows that my bot was told to attack the closestbot.</p>
+
+<h3> I want my bot to collect mines </h3>
+<code> <pre>
+// This Code find the nearest freemine and sets myDir toward that direction //
+        if(task === "freemines") {
+            var closestMine = bot.freeMines[0];
+            for(i = 0; i < bot.freeMines.length; i++) {
+                if(bot.findDistance(myPos, closestMine) > bot.findDistance(myPos, bot.freeMines[i])) {
+                    closestMine = bot.freeMines[i];
+                }
+            }
+            console.log("Claiming a Free Mine!");
+            myDir = bot.findPath(myPos, closestMine);
+        }    
+    
+</pre></code>
+<p> This above code that I made my bot go to find the nearest freemine. I made my bot's task to go to freemines. But my bot found 0 mines. Then my bot went to it's position to find the closest mines. Then my bot followed the path and collected a freemine. </p>
+
+
+<h3> I wanted my bot to attack </h3>
+<code><pre>
+    if(task === "attack"){
+            console.log("Attacking");
+            myDir = bot.findPath(myPos, closestbot.posArray);
+        }
+    
+</pre></code>
+
+<p> The above code shows that I made my bot's task to attack. I typed in this code and made my bot attack the closest bot. I made it go the position where the closest bot was as well.</p>
+
+<h3> I made my bot to go to taverns to collect health</h3>
+<code><pre>
+        if(task === "tavern") {
+            var closestTavern = bot.taverns[0];
+            for(i = 0; i < bot.taverns.length; i++) {
+                if(bot.findDistance(myPos, closestTavern) > bot.findDistance(myPos, bot.taverns[i])) {
+                    closestTavern = bot.taverns[i];
+                }
+            }
+            console.log("Going to get health!");
+            myDir = bot.findPath(myPos, closestTavern);
+        }
+</pre></code>
+<p> The above code shows that I made my bot go to taverns. Then my bot went to it's position to find the closest taverns to go get health. </p>
 
 <h1> What I learned</h1>
 <p> I learned that using my bot was a bit difficult at first but soon I figured out how to use it</p>
