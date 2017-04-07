@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> howtopage </title>
+    </head>
+    <body>
+howtopage
+<p> I made a javascript boxgame for my project. </p>
+<p> I used x and y pos, width, height, speed, and color to make it better and I also made enemies for the game. </p>
+<p> What I found making my howtopage was a little bit hard but the rest of my project was good. </p>
+
+<code>
+    <pre>
+
+
+<p> This code is used for my context. It works by using my document.getElementById. I decided to use this because it shows how to use the context. </p>        
+var mycanvas = document.getElementById("mycanvas");
+var ctx = mycanvas.getContext("2d");
+
+<p> This code is used for making the enemies for the game. It works by making them fall. I decided to do it this way because I used the player to doge them. </p>
+<p> This code is used for moving the enemies. It works by using the positions, width, height, speed, and color. I decided to do it this way because that way the enemies would fall from different places from the box. </p>
+var enemies = [];
+function Enemy(xPos, yPos, width, height, speed, color) {
+    this.xPos = xPos;
+    this.yPos = yPos;
+    this.width = width;
+    this.height = height;
+    this.speed = speed;
+    this.color = color;
+    this.draw = function() {
+        ctx.rect(this.xPos, this.yPos, this.width, this.height);
+        ctx.stroke()
+    }
+    this.move = function() {
+        this.yPos += this.speed;
+    }
+}
+
+<!--How can we explain this better?-->
+<p> This code is used for the enemy functions by numbering the x and y positions. It works by using math in functions. I decided to do it this way because I could decide on which function I would use. </p>
+
+setInterval(function() {
+    enemies.push(new Enemy(Math.random() * 480 + 10, 0, 7, 10, 5, "red"))
+}, 1000)
+setInterval(function() {
+    enemies.push(new Enemy(Math.random() * 450 + 11, 1, 4, 11, 6, "red"))
+}, 1000)
+
+<!--Is this only for moving???-->
+<p> This code is used for how the player would move. This shows which direction it would move. It works by numbering the x and y positions which shows which way the player would go. I decided to do it this way because I figured out how the player would move which is why I used the positions and size and length. </p>
+var box = {
+    xPos: 20,
+    yPos: 50,
+    goLeft: false,
+    goRight: false,
+    goUp: false,
+    goDown: false,
+    width: false,
+    height: false,
+    speed: false,
+    move: function() {
+        console.log(box.goLeft);
+        if (box.goLeft) {
+            box.xPos = box.xPos - 5;
+        }
+        if (box.goRight) {
+            box.xPos += 5;
+        }
+        if (box.goUp) {
+            box.yPos -= 5;
+        }
+        if (box.goDown) {
+            box.yPos += 5;
+        }
+        console.log(box.xPos);
+    },
+    draw: function() {
+        ctx.rect(box.xPos, box.yPos, 20, 20);
+        ctx.stroke();
+    }
+}
+
+<!--How can we explain this better?-->
+<p> This code is used for the functions which was made from using math. It works by how the player would move which is why I used the keycode. I decided to do it this way because it would show the keycode. </p>
+
+document.addEventListener("keydown", function(evt) {
+    if (evt.keyCode === 37) {
+        box.goLeft = true;
+    }
+    if (evt.keyCode === 38) {
+        box.goUp = true;
+    }
+    if (evt.keyCode === 39) {
+        box.goRight = true;
+    }
+    if (evt.keyCode === 40) {
+        box.goDown = true;
+    }
+
+});
+
+<!--How can we explain this better?-->
+<p> This code is used for functions. It works by which direction the player would go. I decided to do it this way because it would help out on the other functions. </p>
+
+document.addEventListener("keyup", function(evt) {
+    if (evt.keyCode === 37) {
+        box.goLeft = false;
+    }
+    if (evt.keyCode === 38) {
+        box.goUp = false;
+    }
+    if (evt.keyCode === 39) {
+        box.goRight = false;
+    }
+    if (evt.keyCode === 40) {
+        box.goDown = false;
+    }
+})
+
+<!--This needs to be looked at again... why is the gameloo???-->
+<p> This code is used for my text align. It works by what text I would write. I decided to do it this way because I would figure where I would put the text game over. </p>
+function gameLoop() {
+    ctx.beginPath();
+    ctx.clearRect(0, 0, mycanvas.width, mycanvas.height);
+    box.move();
+    box.draw();
+
+    for (var i = 0; i < enemies.length; i++) {
+        enemies[i].move();
+        enemies[i].draw();
+        
+        if(isColliding(box,enemies[i])){
+        ctx.font = "30px Timmy";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("Game Over", mycanvas.width/2, mycanvas.height/2);
+        }
+    }
+
+
+    window.requestAnimationFrame(gameLoop);
+}
+gameLoop();
+
+<!--This code isn't for moving... what is isColliding??-->
+<p> This code is used for when the enemy and the player collide at eachother. It works by using the size, width, and length. I decided to do it this way because a gameloop is really helpful to use isColliding. </p>
+function isColliding(th1, th2) {
+    var leftOf = th1.xPos > th2.xPos + th2.width;
+    var aboveOf = th1.xPos > th2.yPos + th2.height;
+    var belowOf = th1.yPos + th1.height < th2.yPos;
+    var rightOf = th1.xPos + th1.width < th2.xPos;
+
+
+    if (!rightOf && !leftOf && !aboveOf && !belowOf) {
+
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
+    </pre>
+</code>
+
+    </body>
+</html>
